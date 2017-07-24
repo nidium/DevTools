@@ -13,7 +13,7 @@ npm start
 
 ## Run nidium DevTools (inside electron)
 ```
-npm server
+npm run server
 cd nidium
 electron --dev .
 ```
