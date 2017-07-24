@@ -1,3 +1,37 @@
+# Nidium DevTools
+This repository is a fork of Chrome DevTools (https://github.com/ChromeDevTools/devtools-frontend) with some [specific changes](https://github.com/ChromeDevTools/devtools-frontend/compare/bc75f2c7c788964801f346af7ba935bba223837f...nidium:chrome-56) for nidium.
+
+Code specific to nidium frontend is in [nidium directory](https://github.com/nidium/DevTools/tree/chrome-56/nidium/).
+
+## Run Chrome DevTools:
+From the root of this repo run:
+```
+npm start
+```
+
+## Run nidium DevTools (inside electron)
+```
+npm server
+cd nidium
+electron --dev .
+```
+
+## Build nidium DevTools (package DevTools CSS/JS)
+```
+cd nidium
+./build.py
+```
+
+Then you can run nidium DevTools inside electron: 
+```
+electron .
+```
+
+Or inside chromium (chrome DevTools only):
+```
+chromium --disable-web-security --user-data-dir="/tmp/" devtools/inspector.html?ws=localhost:9223
+```
+
 # Chrome DevTools frontend
 
 The client-side of the Chrome DevTools, including all JS & CSS to run the DevTools webapp.

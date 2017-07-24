@@ -1,0 +1,8 @@
+{
+  "name": "nidium-dev-tools",
+  "version": "0.1.0",
+  "main": "src/main.js",
+  "dependencies": {
+    "electron": "^1.6.11"
+  }
+}
