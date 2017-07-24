@@ -114,6 +114,14 @@ SDK.WebSocketConnection = class {
    * @param {!InspectorBackendClass.Connection.Params} params
    */
   constructor(url, onWebSocketDisconnect, params) {
+    this._failCounter = 0;
+    this._open(url, onWebSocketDisconnect, params);
+  }
+
+  _open(url, onWebSocketDisconnect, params) {
+    this._url = url;
+    this._params = params;
+
     this._socket = new WebSocket(url);
     this._socket.onerror = this._onError.bind(this);
     this._socket.onopen = this._onOpen.bind(this);
@@ -127,6 +135,7 @@ SDK.WebSocketConnection = class {
   }
 
   _onError() {
+      console.log("onError");
     this._onWebSocketDisconnect.call(null);
     // This is called if error occurred while connecting.
     this._onDisconnect.call(null, 'connection failed');
@@ -136,15 +145,22 @@ SDK.WebSocketConnection = class {
   _onOpen() {
     this._socket.onerror = console.error;
     this._connected = true;
+    this._failCounter = 0;
     for (var message of this._messages)
       this._socket.send(message);
     this._messages = [];
   }
 
   _onClose() {
-    this._onWebSocketDisconnect.call(null);
-    this._onDisconnect.call(null, 'websocket closed');
-    this._close();
+    this._failCounter++;
+
+    if (this._failCounter < 4) {
+      this._open(this._url, this._onWebSocketDisconnect, this._params);
+    } else {
+      this._onWebSocketDisconnect.call(null);
+      this._onDisconnect.call(null, 'websocket closed');
+      this._close();
+    }
   }
 
   /**
@@ -158,6 +174,7 @@ SDK.WebSocketConnection = class {
     this._socket.close();
     this._socket = null;
     this._onWebSocketDisconnect = null;
+    this._failCounter = 0;
   }
 
   /**
