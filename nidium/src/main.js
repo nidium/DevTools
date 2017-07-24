@@ -2,6 +2,12 @@ const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
 
+const isDev = process.argv.indexOf("--dev") != -1;
+
+if (isDev) {
+  app.commandLine.appendSwitch('remote-debugging-port', '9222')
+}
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
@@ -18,7 +24,9 @@ function createWindow () {
   }))
 
   // Open the DevTools.
-  win.webContents.openDevTools()
+  if (isDev) {
+    win.webContents.openDevTools()
+  }
 
   // Emitted when the window is closed.
   win.on('closed', () => {
