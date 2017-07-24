@@ -59,8 +59,7 @@ if not os.path.isfile("devtools/SupportedCSSProperties.js"):
 
 if not os.path.isdir("devtools/Images/"):
     print("- Copying devtools images")
-    os.mkdir("devtools/Images/")
-    shutil.copy2("../front_end/Images/toolbarButtonGlyphs.png", "devtools/Images/")
+    shutil.copytree("../front_end/Images/", "devtools/Images/")
 
 print("- Building chrome devtools")
 os.system("python2.7 ../scripts/build/build_release_applications.py inspector --input_path ../front_end/ --output_path  devtools/")
