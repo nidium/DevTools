@@ -3,6 +3,8 @@ This repository is a fork of Chrome DevTools (https://github.com/ChromeDevTools/
 
 Code specific to nidium frontend is in [nidium directory](https://github.com/nidium/DevTools/tree/chrome-56/nidium/).
 
+![Debugger in action](http://p.nf/nidium/debugger.gif)
+
 ## Run Chrome DevTools:
 From the root of this repo run:
 ```
